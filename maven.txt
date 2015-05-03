@@ -129,3 +129,6 @@ Basic principle here is to Standardize approach to building software
    
    
    Setup: TODO 
+   
+   References: https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html
+   
