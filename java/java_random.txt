@@ -1,0 +1,94 @@
+Integer.MAX_VALUE 
+
+
+System.arraycopy(r, 0, a, 0, i);
+
+Objects.requireNonNull(obj);  // thows NPE if object is Null
+
+
+// usage of remove while iteration 
+if (!c.contains(it.next())) {
+    it.remove();                   // Removes from the underlying collection the last element returned by this iteraton. 
+                                   // This method can be called only once per call to next. Throws IllegalStateException else
+    modified = true;
+}
+// Don't delete an element in anyway except this
+// Replacing an element  in foreach is just replacing the object of that reference and not actually modifiying the underlying collection.
+
+
+
+Usage of HashMap in a HashSet : 
+private transient HashMap<E,Object> map; // ## transient
+
+
+Intresting to note: 
+  => Underlying data store def/type/modifiers. Thier config and setup (size, max limits, loadfactor), overflow/underflow handling conditions 
+  => Iterator impls, How inner classes are used, their modifiers (private/public, static)
+  => Concurrency checks -> (Like in ArrayList)
+  => Algorithms: How arrays.sort is performed
+  
+  
+  Extra functions in Iterator, Iterator, Collection, List, Set
+     => java.util.function.   
+           - Consumer<? super E>   : What does <? super E> mean ##
+           - Predicate
+           - UnaryOperator  
+     => java.util.stream
+            - Stream
+            
+            
+            
+ ==========
+ 
+ 
+ Why Generics?
+- Type safety : In the example the ArrayList is
+declared as a collection of Integers any attempt to
+add an object other than the Integer would give a
+compilation error.
+- No casting required: While retrieving objects from
+the collection explicit casting is not required and
+the type checking of the returned object and its
+reference type is done at compile time.
+- The net effect of this especially in a large program
+is improved readability and robustness
+
+WildCards: 
+   <?>
+   <? extends Blah> 
+   <? super Blah>  ###
+
+=======
+
+for each loop: 
+  The for-each loop hides the iterator, so you cannot call remove. Therefore, the for-each loop is not usable for filtering. 
+  Similarly it is not usable for loops where you need to replace elements in a list or array as you traverse it. 
+  Finally, it is not usable for loops that must iterate over multiple collections in parallel
+ 
+=======  
+
+Operator precedence (and calculation from right or left)
+   Post fix: 
+   Unary: 
+   Creation/Cast:
+   Mulitplicative:: 
+   Additive
+   
+   
+    postfix operators             : [ ] . (params) expr++ expr--
+    unary operators               : ++expr --expr +expr -expr ~ !
+    creation or cast              : New (type)expr
+    multiplicative                : * / %
+    additive                      : + - 
+    shift                         : << , >> , >>>
+    relational                    : < > <= >= instanceof
+    equality                      : == !=
+    bitwise AND                   : &
+    bitwise exclusive OR          : ^
+    bitwise inclusive OR          : |
+    logical AND                   : &&
+    logical OR                    : ||
+    conditional                   : ?:
+    assignment                    : = += -= *= /= %= &= ^= |= <<= >>=
+
+loops, switch, break, continue,
