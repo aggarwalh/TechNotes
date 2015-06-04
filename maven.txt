@@ -127,7 +127,19 @@ Basic principle here is to Standardize approach to building software
           $$ mvn help:effective-pom
  
    
-   
+
+
+  Commands: 
+  
+   1.  Building application
+          $ mvn clean package
+  
+   2.  Running tests: (Running a single test in integration phase)
+         $ mvn integration-test -Dtest=SampleIntegrationTest -Dskip.integration.tests=false -DfailIfNoTests=false
+  
+   3.  Running mvn builds/tests with an open debug port that starts the build process only after you connect the remote debugger to it (by setting suspend=n)
+         $ mvn integration-test -Dmaven.surefire.debug="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001 -Xnoagent -Djava.compiler=NONE" 
+ 
    Setup: TODO 
    
    References: https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html
