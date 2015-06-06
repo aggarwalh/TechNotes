@@ -118,9 +118,14 @@ Basic principle here is to Standardize approach to building software
    Inheritance: 
       - What
       - Best practices
-          a. versions extracted to properties parent
-          b. common dependencies managed in parent
-          c. Plugin config set up in parent
+          a. Segregating what changes to what doesn't + DRY
+               -  Versions extracted to properties in parent ( even your module version need not be written, unless ofcourse your parent versioning is not under your direct control). 
+               -  Common dependencies managed in parent
+               -  Use of  BOM pom (import scope)
+               - Plugin config setup in parent
+          b. Stability of dependencies
+              - Dependencies on external lib even of different teams in same firm should be dependent on stable release unless you explicitly need some feature not present in latest stable release. 
+              - This also applies to your parent pom if it's release cycle is not under your direct control.
       - Root of all poms enforces all default restrictions laid out by maven
            org/apache/maven/model/pom-4.0.0.xml present in lib/maven-model-builder-***.jar
       - See effective pom 
@@ -145,6 +150,54 @@ Basic principle here is to Standardize approach to building software
          $ mvn integration-test -Dmaven.surefire.debug="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001 -Xnoagent -Djava.compiler=NONE" 
  
    Setup: TODO 
-   
+  
+   APPENDIX: 
+
+   1.  COMPILER
+       Configure maven compiler to compile the source as a particular java version (assertion till that versions shall be considered valid) and byte code targeted to a particular version (compatibility). 
+        Note: Both source and target need to be specified that code actually runs on a JRE with specified versions. Pitfall is uninted usage of API available in newer versions which can cause linkage errors at runtime.
+          
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<compilerArgument>-parameters</compilerArgument>
+				</configuration>
+   	                </plugin>
+                </plugins>
+
+
+  2. TEST RUNNERS (surefire, failsafe)
+
+       Configure plugin to bind it's goals to one or more phases custom configurations
+
+          <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+                <configuration>  <!--Disable to default unit-test goal and enable your own version, i.e one with you id-->
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>unit-test</id>  <!--Defining you own name for unit test and configuring it-->
+                        <phase>test</phase> <!--Define the phase to bind to-->
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <argLine>
+                                    -d64 -Xms2048m -Xmx4096m -XX:PermSize=512m ${jacoco.agent.argLine}
+                            </argLine>
+                            <excludedGroups>in.devjcloud.IntegrationTest</excludedGroups>   <!--Exclude specific tests from running -->
+                        </configuration>
+                    </execution>
+                    <!--Define similar executions for integration-test phase-->
+
+ 
    References: https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html
    
