@@ -1,0 +1,46 @@
+java gc
+
+  Reference counting vs GC (two schools of thoughts)
+     True GC is very efficient, whereas reference counting is not.
+	 
+  Mark and Sweep: 
+    You got a stack and a heap. 
+    Stack has several references that point to memory in heap	
+	  - Transitive closure
+	     For every element in the stack follow the locations in the memory: Then you shall have all live objects
+		 
+		 GC itself also maintains a list of all objects. Allocation List
+		 
+		 Note that the stack shown in fig is of one application thread. Exactly determining what objects are live and which ones are not is impossible without actually stopping an application threads.(Say while you took into account one of functions local references, by the time your sweep is complete that function has returned, consequently you have those dead objects, considering that GC in itself if a thread which can be preemted)
+		 
+		 
+      New object creation: 
+        >> Java is very different from C/C++ here. In C/C++ every new object creation (say via malloc) eventually comes down to a system call. You go to kernel space and create a chunk of memory. 
+        >> In java, you get some set of memory upfront (heap) and manage it during runtime in user space. Notion of Xms, Xmx 		
+ 
+      Memory Pools: 
+  	  
+	  Young generation pools: 
+	    Eden
+		Survivor 0
+		Survivor 1
+      
+	  Old Generation pool
+      
+	  PermGen pool: 
+	    - Meant for objects that last JVM life time: thus would hold class metadata and hence hold Class Objects.
+		- With evolution Appication Servers have their own set of Class Loaders. They want to reload apps and thus would want to reload classes themselves.
+        - Thus with java 8, there is no PermGen anymore.
+		
+		- New thing thats coming is meta-space which is outside java heap into Native memory which is bad. Not a lot of tooling for managing native memory.
+ 
+        - "Virtual" there acts as buffer for small increases in memory pools without having to re-acquire heap (as it is contigous) which is a costlier task ##How
+		
+		
+	Why pools ? Empirical analysis on lifetime of Objects lifetime. 
+  
+    Performance causes: 
+	  One discussed: 
+	    - Premature promotion: Memory objects going from eden directly to tenured as survivor spaces were full. (GC pause time needed to be reduced) 
+		
+		Resident set size: Linux or any OS won't help as you are dealing with memory in User space
