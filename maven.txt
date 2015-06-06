@@ -136,6 +136,10 @@ Basic principle here is to Standardize approach to building software
   
    2.  Running tests: (Running a single test in integration phase)
          $ mvn integration-test -Dtest=SampleIntegrationTest -Dskip.integration.tests=false -DfailIfNoTests=false
+           > -Dtest is used to point to a specific test case (Not passing this shall run all available test cases)
+           > -Dskip.integration.tests is a possible placeholder that determines if integration tests shall be skipped. It's not in maven vocab but a common practice. See Appendix##. 
+           > -DfailIfNoTests is needed to avoid failure when running this from top level project which has several modules none of whose (except one) test cases you are running. 
+
   
    3.  Running mvn builds/tests with an open debug port that starts the build process only after you connect the remote debugger to it (by setting suspend=n)
          $ mvn integration-test -Dmaven.surefire.debug="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001 -Xnoagent -Djava.compiler=NONE" 
