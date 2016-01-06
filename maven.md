@@ -1,13 +1,13 @@
 ###What is maven ? 
 
-  1. Build tool
+  1. **Build tool**
       - Create a packaged software (jar, war)
       - Deploy applications to remote repositories
       - Provides a build process which involves several others steps apart from compiling
        and packaging like generating source docs, running unit and integration tests.
       - Integrate with other build tools like CI tool like jenkins
       
-  2. Dependency Management tool: Your project can depend on other lib (jars). 
+  2. **Dependency Management tool**: Your project can depend on other lib (jars). 
      - Resolve version to use
      - Download it recursively
      - Put to class path. (All three are tedious if done mannually)
@@ -55,12 +55,12 @@
       4. import (only available in Maven 2.0.9 or later) N.A for transitivity
          - This scope is only used on a dependency of type pom in the <dependencyManagement> section. 
          - It indicates that the specified POM should be replaced with the dependencies in that POM's <dependencyManagement> section. 
-         - USE CASE: 
-            -When you got dependencyManage a lot of versions (possibly different) of sub-projects of same project (say srping) that you depend on, then you can IMPORT BOM pom (Bill Of Materials) that is parent pom of root pom(parent pom of modules say spring),
-         - This bom pom specifes dependencyManagement for all sub-projects.
-         - example: spring-framework-bom
+         - USE CASE 
+            - When you got dependencyManage a lot of versions (possibly different) of sub-projects of same project (say srping) that you depend on, then you can IMPORT BOM pom (Bill Of Materials) that is parent pom of root pom(parent pom of modules say spring),
+            - This bom pom specifes dependencyManagement for all sub-projects.
+            - example: spring-framework-bom
 
-**Best practices**
+###Best practices
 1. Segregating what changes to what doesn't + DRY
   1. Versions extracted to properties in parent ( even your module's own version need not be written, unless ofcourse your parent versioning is not under your direct control). 
   2. Common dependencies managed in parent
@@ -120,16 +120,14 @@ Extract out variables and substitute them from
     
 ###Commands: 
   
-   1.  Building application
-         ` $ mvn clean package`
+   1. Building application 
+    ` $ mvn clean package`
   
-   2.  Running tests: (Running a single test in integration phase)
-         ```
-         $ mvn integration-test -Dtest=SampleIntegrationTest -Dskip.integration.tests=false -DfailIfNoTests=false
-         ```
-          - -Dtest is used to point to a specific test case (Not passing this shall run all available test cases)
-          - -Dskip.integration.tests is a possible placeholder that determines if integration tests shall be skipped. It's not in maven vocab but a common practice. See Appendix##. 
-          - -DfailIfNoTests is needed to avoid failure when running this from top level project which has several modules none of whose (except one) test cases you are running. 
+   2. Running tests: (Running a single test in integration phase)
+      - ` $ mvn integration-test -Dtest=SampleIntegrationTest -Dskip.integration.tests=false -DfailIfNoTests=fals`
+      - -Dtest is used to point to a specific test case (Not passing this shall run all available test cases)
+      - -Dskip.integration.tests is a possible placeholder that determines if integration tests shall be skipped. It's not in maven vocab but a common practice. See Appendix##. 
+      - -DfailIfNoTests is needed to avoid failure when running this from top level project which has several modules none of whose (except one) test cases you are running. 
  
    3.  Running mvn builds/tests with an open debug port that starts the build process only after you connect the remote debugger to it (by setting suspend=n)
         ```
