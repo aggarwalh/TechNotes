@@ -3,34 +3,31 @@
   1. Build tool
       - Create a packaged software (jar, war)
       - Deploy applications to remote repositories
-      - (spl) Provides a build process which involves several others steps apart from compiling
+      - Provides a build process which involves several others steps apart from compiling
        and packaging like generating source docs, running unit and integration tests.
-      - (spl) Integrate with other build tools like CI tool like jenkins
+      - Integrate with other build tools like CI tool like jenkins
       
   2. Dependency Management tool: Your project can depend on other lib (jars). 
-         - Resolve version to use
-         - Download it recursively 
-         - Put to class path. (All three are tedious if done mannually)
-         - (spl) In what all phases/goals a dependency is added to the classpath can be set via scope
+     - Resolve version to use
+     - Download it recursively
+     - Put to class path. (All three are tedious if done mannually)
+     - In what all phases/goals a dependency is added to the classpath can be set via scope
   
   3. Project Management tool (primitive in this aspect):
       - Project(artifact) versioning
 
 ###Basic principle: 
-  Standardize approach to building software
-  Convention over configuration 
+  **Standardize approach to building software**: Convention over configuration 
   1. Standardizing project layout
   2. Standardizing LifeCycle and phases (Maven binds certain phases to lifecycle)
   3. Maven binds certain goals to certain phases based on packaging. 
   4. Enforce on order of execution of phases in sequence.
      
-      
-  
-  
+       
   
 ### DEPENDENCY MANAGEMENT: 
  
-   1. Dependency Resolution(dependency mediation): dependencies tag
+   1. **Dependency Resolution**(dependency mediation): dependencies tag
   
                     BFS A->B(1.0)-> C(2.0)
                                  -> D(4.0)
@@ -42,37 +39,37 @@
                             C shall be resolved to 3.0
                             D shall be resolved to 4.0        
     
-   2. dependecyManagement tag: (say spring to v1.0 in current module or it's parent)
-        - If a dependecy comes up in SAME project, you don't need to specify the version (if you do then that will take precedence). 
-           USE CASE: Typically used to abstract out version settings to common parent which typically has pom packaging.
-        - If a transitive dependency comes up with v2.0 then, dependencyManagement shall override this to v1.0. 
-           USE CASE: Hard set of version for transitive dependencies. i.e dependencyManagement overried dependencyMediation for transitive dependencies
-        - NOTE: it doesn't define a dependency itself, only a version if a dependency is defined.
-        - child's dependencyManagement overrides parents dependencyManagement       
+   2. **dependecyManagement** tag: (say spring to v1.0 in current module or it's parent)
+      - If a dependecy comes up in SAME project, you don't need to specify the version (if you do then that will take precedence). 
+        - USE CASE: Typically used to abstract out version settings to common parent which typically has pom packaging.
+      - If a transitive dependency comes up with v2.0 then, dependencyManagement shall override this to v1.0. 
+        - USE CASE: Hard set of version for transitive dependencies. i.e dependencyManagement overried dependencyMediation for transitive dependencies
+      - NOTE: it doesn't define a dependency itself, only a version if a dependency is defined.
+      - child's dependencyManagement overrides parents dependencyManagement       
         
-   3. Scopes: Dependency scope is used to limit the transitivity of a dependency and also to affect the classpath used for various build tasks(compilation, test). 
+   3. **Scopes**: Dependency scope is used to limit the transitivity of a dependency and also to affect the classpath used for various build tasks(compilation, test). 
         
       1. compile (default scope) dependencies are available in all classpaths of a project and are transitive.
       2. provided:  Not transitive, same as compile for classpaths, but not in packaging (like servlet api in wars)
       3. test: transitive, only available for the test-compile and test execution phases. 
       4. import (only available in Maven 2.0.9 or later) N.A for transitivity
-               - This scope is only used on a dependency of type pom in the <dependencyManagement> section. 
-               - It indicates that the specified POM should be replaced with the dependencies in that POM's <dependencyManagement> section. 
-               - USE CASE: 
-                       -When you got dependencyManage a lot of versions (possibly different) of sub-projects of same project (say srping)
-                        that you depend on, then you can IMPORT BOM pom (Bill Of Materials) that is parent pom of root pom(parent pom of modules say spring),
-                       - This bom pom specifes dependencyManagement for all sub-projects.
-                       - example: spring-framework-bom
+         - This scope is only used on a dependency of type pom in the <dependencyManagement> section. 
+         - It indicates that the specified POM should be replaced with the dependencies in that POM's <dependencyManagement> section. 
+         - USE CASE: 
+            -When you got dependencyManage a lot of versions (possibly different) of sub-projects of same project (say srping) that you depend on, then you can IMPORT BOM pom (Bill Of Materials) that is parent pom of root pom(parent pom of modules say spring),
+         - This bom pom specifes dependencyManagement for all sub-projects.
+         - example: spring-framework-bom
+
 **Best practices**
 1. Segregating what changes to what doesn't + DRY
-  - Versions extracted to properties in parent ( even your module's own version need not be written, unless ofcourse your parent versioning is not under your direct control). 
-  - Common dependencies managed in parent
-  - Use of  BOM pom (import scope)
-  - Plugin config setup in parent
+  1. Versions extracted to properties in parent ( even your module's own version need not be written, unless ofcourse your parent versioning is not under your direct control). 
+  2. Common dependencies managed in parent
+  3. Use of  BOM pom (import scope)
+  4. Plugin config setup in parent
 2. Stability of dependencies
-  - Dependencies on external lib even of different teams in same firm should be dependent on stable release unless you explicitly need some feature not present in latest stable release. 
-  - This also applies to your parent pom if it's release cycle is not under your direct control.
-  - Root of all poms enforces all default restrictions laid out by maven. org/apache/maven/model/pom-4.0.0.xml present in lib/maven-model-builder-***.jar
+  1. Dependencies on external lib even of different teams in same firm should be dependent on stable release unless you explicitly need some feature not present in latest stable release. 
+  2. This also applies to your parent pom if it's release cycle is not under your direct control.
+  3. Root of all poms enforces all default restrictions laid out by maven. org/apache/maven/model/pom-4.0.0.xml present in lib/maven-model-builder-***.jar
 3. See effective pom `$$ mvn help:effective-pom`
                        
 
