@@ -6,11 +6,13 @@
 ###Rebase vs Merge
 
 **Merge**
-1.** What**: Merging two branches `(branch a)$ git merge b`  (both local or a local and a remote ) creates a new commit which marks the merge of two branches. Only corner case here is if the branch on which you are merging you changes hasn't changed since you branched out of it then git by default does a fast-forward merge which effectively put all commits of b infront of a to give a linear history. All other cases (non-fast forward) cases are referred as **true merge**.
-2.** When** (true merge): Doing a merge makes sense when you want to preserve history of merge happening
+
+1.**What**: Merging two branches `(branch a)$ git merge b`  (both local or a local and a remote ) creates a new commit which marks the merge of two branches. Only corner case here is if the branch on which you are merging you changes hasn't changed since you branched out of it then git by default does a fast-forward merge which effectively put all commits of b infront of a to give a linear history. All other cases (non-fast forward) cases are referred as **true merge**.
+2.**When** (true merge): Doing a merge makes sense when you want to preserve history of merge happening
     - When merging a completed feature branch to a public branch (say master). Always to a true merge `(master)$ git merge feature1 --no-ff `. Where --no-ff represents no fast forward.
 
 **Rebase**
+
 1.** What**: Rebasing two branches `(branch a)$ git rebase b` or `$ git rebase b a`  (both local or a local and a remote) as the name suggests rebases the origin of branch 'a' to the head of branch b.
 2.** When**:
    - Pulling remote branch to your local branch on top of your local commits.(There is no need to create un-necessary merge loops which have no meaning as it is just difference in timing of commits made by different developers on the same branch)
