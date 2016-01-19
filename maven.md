@@ -29,7 +29,7 @@
  
    1. **Dependency Resolution**(dependency mediation): dependencies tag
   
-                    BFS A->B(1.0)-> C(2.0)
+                 BFS A->B(1.0)-> C(2.0)
                                  -> D(4.0)
                          ->C(3.0)
                          ->E     -> D(5.0)
