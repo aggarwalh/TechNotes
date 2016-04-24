@@ -13,6 +13,12 @@ Note: OS X doesn't read `~/.bashrc` file on bash start.Instead, it reads the fol
    - Another common example is to display date/time, user, hostname and current directory. `PS1="[\d \t \u@\h:\w ] $`
    - Ref: http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
 
+###Jdk
+ Download latest jdk dmg from oracle site and install it.
+ >> Confirm using $ java -version
+
+###Maven
+ Download latest archive from maven.apache.org. Extract it and put to desired location (typically /usr/local/). Add the bin folder to your PATH environment variable.
 ###Git
 Download and install using git installer dmg file available on sourceforge.
 
@@ -28,6 +34,6 @@ Download and install using git installer dmg file available on sourceforge.
 
 1. Directly update these files. See sample in ../gitconfig.txt
 2. Use the command line 
-   - `$git config [--global| --system] property value
-   - Ex ``$ git config --global user.name "Harshit Aggarwal"
+   - `$git config [--global| --system] property value`
+   - Ex `$ git config --global user.name "Harshit Aggarwal"`
 
