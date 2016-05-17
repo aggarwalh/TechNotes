@@ -10,7 +10,8 @@ Note: OS X doesn't read `~/.bashrc` file on bash start.Instead, it reads the fol
 
 1. Custom bash prompt:Set the PS1 variable with needed information shortcuts to set the current prompts settings
    - I have set it to show username and working directory: `PS1='\u:\w\$'`
-   - Another common example is to display date/time, user, hostname and current directory. `PS1="[\d \t \u@\h:\w ] $`
+   - Another common example is to display date/time, user, hostname and current directory.
+        - `PS1="[\d \t \u@\h:\w ] $`
    - Ref: http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
 
 ###Jdk
@@ -18,7 +19,26 @@ Note: OS X doesn't read `~/.bashrc` file on bash start.Instead, it reads the fol
  >> Confirm using $ java -version
 
 ###Maven
- Download latest archive from maven.apache.org. Extract it and put to desired location (typically /usr/local/). Add the bin folder to your PATH environment variable.
+#### Installation
+1. Download latest archive from maven.apache.org. 
+2. Extract it and put to desired location (typically /usr/local/). 
+3. Add the bin folder to your PATH environment variable
+4. Test installation using `$ mvn --version`
+
+####Configuration (settings.xml)
+**Where** 
+
+1. Global settings at mavenInstallLocation/conf/settings.xml
+2. A user level settings: userHomeFolder/.m2/settings.xml
+   - In case user's settings.xml doesn't exist you can simply copy global settings file to user's settings location and override as needed.
+3. Project level settings can be set in projects pom.xml file
+   
+**What**
+
+1. A very common use case is to change to default remote mirror to download atrifacts from.
+2. Other common configurations are localRepository, offline, servers, mirrors, proxies, profiles, activeProfiles.
+3. Ref: https://maven.apache.org/settings.html
+
 ###Git
 Download and install using git installer dmg file available on sourceforge.
 
