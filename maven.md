@@ -1,4 +1,4 @@
-###What is maven ? 
+### What is maven ? 
 
   1. **Build tool**
       - Create a packaged software (jar, war)
@@ -16,7 +16,7 @@
   3. Project Management tool (primitive in this aspect):
       - Project(artifact) versioning
 
-###Basic principle: 
+### Basic principle: 
   **Standardize approach to building software**: Convention over configuration 
   1. Standardizing project layout
   2. Standardizing LifeCycle and phases (Maven binds certain phases to lifecycle)
@@ -60,7 +60,7 @@
             - This bom pom specifes dependencyManagement for all sub-projects.
             - example: spring-framework-bom
 
-###Best practices
+### Best practices
 1. Segregating what changes to what doesn't + DRY
   1. Versions extracted to properties in parent ( even your module's own version need not be written, unless ofcourse your parent versioning is not under your direct control). 
   2. Common dependencies managed in parent
@@ -73,7 +73,7 @@
 3. See effective pom `$$ mvn help:effective-pom`
                        
 
-###PROJECT BUILD                     
+### PROJECT BUILD                     
                     
 **Concepts** 
 **Plugins**: 
@@ -111,14 +111,14 @@ Extract out variables and substitute them from
  - custom variables set using properties tag or in filter(property files) files
    
    
-###PROJECT MANAGEMENT
+### PROJECT MANAGEMENT
              
 - Basic Metadata: GAVP (Group,Artifact,Version, Packaging)
 - More textual info: name, description
 - More info: developers, ci tool, scm , license
     
     
-###Commands: 
+### Commands: 
   
    1. Building application 
     ` $ mvn clean package`
@@ -134,9 +134,9 @@ Extract out variables and substitute them from
          $ mvn integration-test -Dmaven.surefire.debug="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8001 -Xnoagent -Djava.compiler=NONE" 
         ```
  
-###   Setup: TODO 
+### Setup: 
   
-###APPENDIX: 
+### APPENDIX: 
 
 **Plugin Config**
 
