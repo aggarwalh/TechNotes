@@ -1,31 +1,33 @@
-##Common development environment setup in Mac
+## Common development environment setup in Mac
 
-###Bash Shell
+### Bash Shell
 Note: OS X doesn't read `~/.bashrc` file on bash start.Instead, it reads the following files (in the following order):
-    - /etc/profile
-    - ~/.bash_profile
-    - ~/.bash_login
-    - ~/.profile (Thus put stuff that you typically put in your linux bashrc file in ~/.profile)
+ -  /etc/profile
+ - ~/.bash_profile
+ - ~/.bash_login
+ - ~/.profile (Thus put stuff that you typically put in your linux bashrc file in ~/.profile)
 
 
 1. Custom bash prompt:Set the PS1 variable with needed information shortcuts to set the current prompts settings
-   - I have set it to show username and working directory: `PS1='\u:\w\$'`
-   - Another common example is to display date/time, user, hostname and current directory.
-        - `PS1="[\d \t \u@\h:\w ] $`
-   - Ref: http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
+  - I have set it to show username and working directory:  `PS1='\u:\w\$'`
+  - Another common example is to display date/time, user, hostname and current directory.
+      - `PS1="[\d \t \u@\h:\w ] $`
+  - Ref: http://www.cyberciti.biz/tips/howto-linux-unix-bash-shell-setup-prompt.html
 
-###Jdk
+### Jdk
  Download latest jdk dmg from oracle site and install it.
- >> Confirm using $ java -version
+ ```
+ Confirm using $ java -version
+ ```
 
-###Maven
+### Maven
 #### Installation
 1. Download latest archive from maven.apache.org. 
 2. Extract it and put to desired location (typically /usr/local/). 
 3. Add the bin folder to your PATH environment variable
 4. Test installation using `$ mvn --version`
 
-####Configuration (settings.xml)
+#### Configuration (settings.xml)
 **Where** 
 
 1. Global settings at mavenInstallLocation/conf/settings.xml
@@ -39,10 +41,10 @@ Note: OS X doesn't read `~/.bashrc` file on bash start.Instead, it reads the fol
 2. Other common configurations are localRepository, offline, servers, mirrors, proxies, profiles, activeProfiles.
 3. Ref: https://maven.apache.org/settings.html
 
-###Git
+### Git
 Download and install using git installer dmg file available on sourceforge.
 
-####Configuration
+#### Configuration
 
 **Where** 
 
