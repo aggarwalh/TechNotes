@@ -28,12 +28,12 @@
 
 #### Configration style
  - Java config, Annotation based, XML config
- - Java config is now the prescribed mode over old xml style. Annotation mode should supplement java config style.
-    - Like XML it helps in segrating config from app logic
-    - Pros from xml: Provides compile time check on config issues     
-    - Cons from xml: Just the idea that a java file is actually config and not app logic. xml cofig made that more clear.
-    - Clearly the pros outweigh the cons.
-
+ - XML is the old way of doing things. Only pros being separation of code and config, but that is the very cons too as it very verbose (being xml) and also that a lot of wiring can be done by spring itself.
+ - Between the Java Config style and Annotation based style 
+    - **Verbose/Readability** Java config style is verbose (like xml), but you do get to catch most issues at compile time unlike xml. Annotation based style using ComponentScan on @Component and it's avatars are less verbose. 
+    - **Auto Injection** Annotation style embraces this and lets the framework do this. 
+    
+    
 **Java bean configuration style**
  - **@Configuration** annotation on a **class** denotes that it is a config file.
  - Each bean def'n is a **method** with **@Bean** def'n. Where method name is the bean id. Return type is the Type being returned (Interface or class). Body of class creates the object using constructor parameterization or setters. You can refer other beans defined in your config as paramerter or setter values.
@@ -41,17 +41,36 @@
      - Refering a bean from imported config file in a bean def'n of current file 
      - Style 1: To use a bean defined in dao config in your service layer bean you need to include it as a the beans' function parameter. 
      - Style 2: Add the dependent bean type as data member of given Service layer bean def'n and use Annotation style's to inject the correct bean
-         - Style 2.1: **@Autowired** : means Autowire by type first (then by qualifier and finally by the name) => This would work if there is exactly one bean of that type. To overcome this issue @Autowire is supplemented with @Qualifier stating the exact bean name
-         - Style 2.2: **@Inject** ( java standard)   
-         - Style 2.3: **@Resource**:  a java standard (javax.annotations) . uses "autowire by name" style then by type and finally by Qualifiers (ignored if match is found by name).
  - The default creation style of spring is *singleton*, which is done by spring using a proxy on config class.
 
 **Annotation style**
- - @Autowire
- - @Inject
- - @Resource
- - @ComponentScan in conjuction with @Component ( or specific types like @Controller, @Service, @Repository)
+ - Dependency Injection (Field/Method(Setter)/Constructor)
+    - **@Autowired** : means Autowire by type first (then by qualifier and finally by the name) => This would work if there is exactly one bean of that type. To overcome this issue @Autowire is supplemented with @Qualifier stating the exact bean name
+    - **@Inject** (java standard, i.e. javax.annotations) A replacement of @Autowire which is spring specific annotation
+    - **@Resource**: (also a java standard) . uses "autowire by name" style then by type and finally by Qualifiers (ignored if match is found by name).
+    - **Contrasting them with use-cases**: TODO
+ - Declaring a Java class as a bean
+     - **@Component**: Annotation applied on a class
+     - **@Repository**: Specialization of @Component applied to DAO layer classes. 
+         - Serves as high level functional segregation on nature of component for both Humans (readability) and machine (add extra facilities specific to annotation)
+         - It also makes the unchecked exceptions (thrown from DAO methods) eligible for translation into Spring DataAccessException
+     - **@Service**: Specialization of @Component. Currently no extra feature on top of @Component apart from clarity.
+     - **@Controller**: Specialization of @Component. This annotation marks a class as a Spring Web MVC controller. You can use another annotations i.e. @RequestMapping; to map URLs to instance methods of a class.
+     - **Contract use-case**: Prefer the three specialization of @Component instead of @Component itself for clarity and extra benefits discussed above. 
+ - Enable detection of these beans and pulling them in DI container.
+      - **@ComponentScan**: TODO
 
-**Organization Patterns**
- - Organization of bean definitions in different java files based on layers and/or functionality. This has already been discussed above.
- - Abstract dependency definitions when writing a library. You may want user to plug in some dependencies and to abstract them up in an Interface that defines getters to the dependency and you Autowire on this interface in your library's spring context. The client can provide his implementation and even switch among various one's using @Profile and run-time jvm args.   
+
+ 
+ ** Modern injection style 1: Annotation based as primary and Java config as secondary**
+  - Prefer Annotation style for all classes in your repo. 
+  - Use Java config when you can't use above:
+      - For classes not in our source code like say configure java.util.Date.
+      - For cases when you want multiple beans instances of same Class with different constuction.
+      
+  ** Style 2: Use Java config as primary and Annotation config as secondary**
+   - This is mostly done when writing libraries and not end application 
+   - Organization Patterns for java beans style
+      - Organization of bean definitions in different java files based on layers and/or functionality. This has already been discussed above.
+      - Abstract dependency definitions when writing a library. You may want user to plug in some dependencies and to abstract them up in an Interface that defines getters to the dependency and you Autowire on this interface in your library's spring context. The client can provide his implementation and even switch among various one's using @Profile and run-time jvm args. 
+ 
