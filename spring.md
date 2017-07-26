@@ -60,15 +60,13 @@
  - Enable detection of these beans and pulling them in DI container.
       - **@ComponentScan**: TODO
 
-
- 
- ** Modern injection style 1: Annotation based as primary and Java config as secondary**
+**Modern injection style 1: Annotation based as primary and Java config as secondary**
   - Prefer Annotation style for all classes in your repo. 
   - Use Java config when you can't use above:
       - For classes not in our source code like say configure java.util.Date.
       - For cases when you want multiple beans instances of same Class with different constuction.
       
-  ** Style 2: Use Java config as primary and Annotation config as secondary**
+**Style 2: Use Java config as primary and Annotation config as secondary**
    - This is mostly done when writing libraries and not end application 
    - Organization Patterns for java beans style
       - Organization of bean definitions in different java files based on layers and/or functionality. This has already been discussed above.
