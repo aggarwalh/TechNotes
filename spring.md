@@ -25,6 +25,9 @@
     - Custom bean initialization and destruction code
     - Early vs Lazy evaluation
     - Revaluation of entire context etc. 
+  - Spring scope
+    - Singleton: The default scope. Spring creates and manages a singleton bean
+    - Prototype: When some section of your service also contains state, you want to create a new instance of Service for every *getBean* call or by declaring a lookup method (@Lookup in annotation or lookup-method in xml config). Common smell that tells us to use this is having a singleton bean and then using a copy constructor.
 
 #### Configration style
  - Java config, Annotation based, XML config
